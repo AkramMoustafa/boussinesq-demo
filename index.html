@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boussinesq FNO — Vorticity Predictor</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 3rem 2rem 1.5rem;
+      text-align: center;
+      border-bottom: 1px solid #21262d;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #58a6ff, #79c0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      margin-top: 0.75rem;
+      color: #8b949e;
+      max-width: 640px;
+      margin-inline: auto;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .badges {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .badge {
+      background: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 2rem;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.78rem;
+      color: #8b949e;
+    }
+
+    .badge span {
+      color: #58a6ff;
+      font-weight: 600;
+    }
+
+    .demo-wrapper {
+      flex: 1;
+      padding: 2rem;
+      max-width: 1200px;
+      width: 100%;
+      margin-inline: auto;
+    }
+
+    .demo-wrapper iframe {
+      width: 100%;
+      height: 720px;
+      border: 1px solid #21262d;
+      border-radius: 12px;
+      background: #161b22;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .info-card {
+      background: #161b22;
+      border: 1px solid #21262d;
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .info-card h3 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8b949e;
+      margin-bottom: 0.4rem;
+    }
+
+    .info-card p {
+      font-size: 1rem;
+      color: #e6edf3;
+      font-weight: 500;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      border-top: 1px solid #21262d;
+      color: #8b949e;
+      font-size: 0.82rem;
+    }
+
+    footer a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Boussinesq Vorticity Predictor</h1>
+    <p>
+      A Fourier Neural Operator (FNO) trained on the 2D Boussinesq system.
+      Given initial vorticity and temperature fields, it predicts the vorticity
+      at <em>t&nbsp;=&nbsp;100</em> on a 128&times;128 periodic domain [0,&nbsp;2&pi;]&sup2;.
+    </p>
+    <div class="badges">
+      <div class="badge">Model <span>FNO</span></div>
+      <div class="badge">Resolution <span>128&times;128</span></div>
+      <div class="badge">Epochs <span>1200</span></div>
+      <div class="badge">Norm <span>H2-normalized ICs</span></div>
+      <div class="badge">Domain <span>[0, 2&pi;]&sup2;</span></div>
+    </div>
+  </header>
+
+  <div class="demo-wrapper">
+    <iframe
+      src="https://moust1am-boussinesq-fno-space.hf.space"
+      frameborder="0"
+      allow="accelerometer; microphone; camera"
+    ></iframe>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>Architecture</h3>
+        <p>FNO — 4 layers, 64 modes, 64 hidden channels</p>
+      </div>
+      <div class="info-card">
+        <h3>Training data</h3>
+        <p>10,000 trajectories, &nu;&nbsp;=&nbsp;1, T&nbsp;=&nbsp;100</p>
+      </div>
+      <div class="info-card">
+        <h3>Initial condition norm</h3>
+        <p>&#x2016;&omega;&sub;0;&#x2016;<sub>H&sup2;</sub> + &#x2016;&theta;&sub;0;&#x2016;<sub>H&sup2;</sub> = 0.2</p>
+      </div>
+      <div class="info-card">
+        <h3>Training loss</h3>
+        <p>H1 loss, StepLR scheduler</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Built with <a href="https://neuraloperator.github.io" target="_blank">neuraloperator</a>
+    &nbsp;&middot;&nbsp;
+    Hosted on <a href="https://huggingface.co/spaces/moust1am/boussinesq-fno-space" target="_blank">Hugging Face Spaces</a>
+    &nbsp;&middot;&nbsp;
+    Central Michigan University
+  </footer>
+
+</body>
+</html>
