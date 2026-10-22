@@ -335,12 +335,13 @@
     <p>
       A Fourier Neural Operator trained on 2D Boussinesq convection — maps
       initial vorticity &amp; temperature to the vorticity field at
-      <em>t&nbsp;=&nbsp;100</em> in milliseconds.
+      <em>t&nbsp;=&nbsp;100</em> in milliseconds. The amplitude
+      <em>&epsilon;</em> is a user-controlled input.
     </p>
     <div class="badges">
       <div class="badge"><b>FNO</b> &nbsp;4 layers</div>
       <div class="badge"><b>128</b>&times;<b>128</b> grid</div>
-      <div class="badge"><b>1200</b> epochs</div>
+      <div class="badge">multi-&epsilon;: <b>0.021 &ndash; 0.476</b></div>
       <div class="badge">H<sup>2</sup>-normalized ICs</div>
       <div class="badge">&nu; = 1 &nbsp;|&nbsp; T = 100</div>
     </div>
@@ -382,12 +383,12 @@
         <div class="info-card">
           <div class="icon">📐</div>
           <h3>IC Normalization</h3>
-          <p>‖ω₀‖_H² + ‖θ₀‖_H² = 0.2</p>
+          <p>‖u₀‖_H² = ‖θ₀‖_H² = ε/2</p>
         </div>
         <div class="info-card">
-          <div class="icon">⚡</div>
-          <h3>Training Loss</h3>
-          <p>H1 loss · StepLR · 1200 epochs</p>
+          <div class="icon">🎚️</div>
+          <h3>Amplitude ε</h3>
+          <p>trained range 0.021 – 0.476</p>
         </div>
       </div>
     </section>
@@ -397,13 +398,13 @@
       <div class="steps">
         <div class="step">
           <div class="step-num">1</div>
-          <h4>Generate Initial Fields</h4>
-          <p>Gaussian Random Fields for vorticity and temperature, H2-normalized to 0.2.</p>
+          <h4>Choose ε &amp; generate ICs</h4>
+          <p>Pick the amplitude ε. Gaussian Random Fields are drawn and normalized so that ‖u₀‖_H² = ‖θ₀‖_H² = ε/2.</p>
         </div>
         <div class="step">
           <div class="step-num">2</div>
           <h4>Run the FNO</h4>
-          <p>The operator maps the 128&times;128 input pair to the vorticity field at t&nbsp;=&nbsp;100.</p>
+          <p>The operator takes (ω₀, θ₀, ε) and returns the vorticity field at t&nbsp;=&nbsp;100 in milliseconds.</p>
         </div>
         <div class="step">
           <div class="step-num">3</div>
